@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<title>localStorage viewer</title>
+</head>
+<body>
+<h1>localStorage viewer</h1>
+
+<script type="text/javascript">
+// http://stackoverflow.com/a/9609450
+var element = document.createElement('div');
+function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+        // strip script/html tags
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+    }
+
+    return str;
+}
+
+var nokeys = true;
+html = "<table border><tr><th>key</th><th>value</th></tr>\n";
+for (var key in localStorage) {
+    nokeys = false;
+    html += "<tr><td>" + decodeHTMLEntities(key) + " </td><td> " + decodeHTMLEntities(localStorage[key]) + "</td></tr>\n";
+}
+html += "</table>\n";
+if (nokeys) {
+    document.write("<p><b>No keys found in localStorage.</b></p>");
+} else {
+    document.write(html);
+}
+</script>
+</body>
+</html>
